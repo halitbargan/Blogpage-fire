@@ -5,14 +5,10 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { textAlign } from '@mui/system';
 import claruswaylogo from "../assets/cw.jpeg"
 import { useNavigate } from 'react-router-dom';
 
@@ -44,6 +40,7 @@ const Navbar = () => {
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: 'flex',  } }}
+            onClick={() => {navigate("/"); setAnchorElUser(null)}}
           >
            <img src={claruswaylogo} alt="clglogo" width="50px" height="50px"/>
           </Typography>
