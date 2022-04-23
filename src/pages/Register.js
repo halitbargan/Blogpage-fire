@@ -24,8 +24,9 @@ const theme = createTheme();
    const navigate= useNavigate()
 
   const handleSubmit = (e) => {
+    const displayName=`${email}`;
     e.preventDefault();
-    createUser(email,password,navigate);
+    createUser(email,password,navigate,displayName);
     
   };
 
