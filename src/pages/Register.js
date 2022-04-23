@@ -11,7 +11,8 @@ import BlogIcon from "../assets/blok.png";
 import googleLogo from "../assets/google.png";
 import "./LoginRegister.css"
 import { useState } from 'react';
-import {createUser} from "../helpers/firebase"
+import {createUser} from "../helpers/firebase";
+import {useNavigate} from "react-router-dom"
 
 
 
@@ -20,15 +21,12 @@ const theme = createTheme();
  function Register() {
    const [email,setEmail] = useState();
    const [password,setPassword] = useState();
+   const navigate= useNavigate()
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
-    createUser(email,password);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createUser(email,password,navigate);
+    
   };
 
   return (
@@ -55,7 +53,9 @@ const theme = createTheme();
           <Typography component="h1" variant="h5" sx={{fontFamily:"Roboto"}}>
           ────REGISTER────
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          
+          <Box  noValidate  sx={{ mt: 3 }}>
+          <form id= "register" onSubmit={handleSubmit}>
             <Grid container spacing={5}>
 
               <Grid item xs={12}>
@@ -66,6 +66,7 @@ const theme = createTheme();
                   label="Email"
                   name="email"
                   autoComplete="email"
+                  onChange={(e)=>setEmail(e.target.value)}
                   
                 />
               </Grid>
@@ -78,7 +79,7 @@ const theme = createTheme();
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  
+                  onChange={(e)=>setPassword(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -87,7 +88,9 @@ const theme = createTheme();
               fullWidth
               variant="contained"
               sx={{ mt: 5, mb: 2 }}
-            >
+              
+                >
+            
               REGISTER
             </Button>
             <Button
@@ -98,8 +101,9 @@ const theme = createTheme();
             >
               WITH <img className= "google-logo" src={googleLogo} alt="google-logo"/>
             </Button>
-            
+            </form>
           </Box>
+          
         </Box>
         
       </Container>

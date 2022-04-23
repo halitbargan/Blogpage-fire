@@ -10,19 +10,24 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import BlogIcon from "../assets/blok.png";
 import googleLogo from "../assets/google.png";
 import "./LoginRegister.css"
+import { useState } from 'react';
+import {signIn} from "../helpers/firebase";
+import {useNavigate} from "react-router-dom"
 
 
 
 const theme = createTheme();
 
  function Login() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+   const [email,setEmail] = useState();
+   const [password,setPassword] = useState();
+   const navigate= useNavigate()
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signIn(email,password,navigate);
+    console.log(email,password);
+    
   };
 
   return (
@@ -49,7 +54,9 @@ const theme = createTheme();
           <Typography component="h1" variant="h5" sx={{fontFamily:"Roboto"}}>
           ────LOGIN────
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          
+          <Box  noValidate  sx={{ mt: 3 }}>
+          <form id= "register" onSubmit={handleSubmit}>
             <Grid container spacing={5}>
 
               <Grid item xs={12}>
@@ -60,6 +67,7 @@ const theme = createTheme();
                   label="Email"
                   name="email"
                   autoComplete="email"
+                  onChange={(e)=>setEmail(e.target.value)}
                   
                 />
               </Grid>
@@ -72,7 +80,7 @@ const theme = createTheme();
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  
+                  onChange={(e)=>setPassword(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -81,7 +89,9 @@ const theme = createTheme();
               fullWidth
               variant="contained"
               sx={{ mt: 5, mb: 2 }}
-            >
+              
+                >
+            
               LOGIN
             </Button>
             <Button
@@ -92,8 +102,9 @@ const theme = createTheme();
             >
               WITH <img className= "google-logo" src={googleLogo} alt="google-logo"/>
             </Button>
-            
+            </form>
           </Box>
+          
         </Box>
         
       </Container>
@@ -102,4 +113,4 @@ const theme = createTheme();
   );
 }
 
-export default Login;
+export default Login

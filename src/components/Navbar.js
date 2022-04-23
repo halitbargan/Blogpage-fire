@@ -11,27 +11,26 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import claruswaylogo from "../assets/cw.jpeg"
 import { useNavigate } from 'react-router-dom';
-
-const page = ["<Halit/>"];
+import {logOut} from "../helpers/firebase"
+const page = ["<Recep/>"];
 const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  // const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const currentUser=false
+  const currentUser=true
   const navigate=useNavigate()
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  // const handleOpenNavMenu = (event) => {
+  //   setAnchorElNav(event.currentTarget);
+  // };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  // const handleCloseNavMenu = () => {
+  //   setAnchorElNav(null);
+  // };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
   return (
-    <div style={{border:""}}>
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -40,7 +39,6 @@ const Navbar = () => {
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: 'flex',  } }}
-            onClick={() => {navigate("/"); setAnchorElUser(null)}}
           >
            <img src={claruswaylogo} alt="clglogo" width="50px" height="50px"/>
           </Typography>
@@ -54,7 +52,6 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{color:"white", p: 0}}>
-              {currentUser ? <p>Felix Franko</p> : "" }
                <AccountCircleIcon fontSize='large'/>
               </IconButton>
             </Tooltip>
@@ -74,29 +71,28 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {currentUser ? (<>
+              {currentUser ? (<div>
               <MenuItem onClick={() => {navigate("/profil"); setAnchorElUser(null)}}>
                 <Typography textAlign="center">Profile</Typography>
               </MenuItem>
               <MenuItem onClick={() => {navigate("/newblog"); setAnchorElUser(null)}}>
                 <Typography textAlign="center">New</Typography>
               </MenuItem>
-              <MenuItem onClick={() => {navigate("/"); setAnchorElUser(null)}}>
+              <MenuItem onClick={() => {navigate("/"); setAnchorElUser(null);logOut()}}>
                 <Typography textAlign="center">Logout</Typography>
-              </MenuItem> </>) :
-              <><MenuItem onClick={() => {navigate("/login");setAnchorElUser(null)}}>
+              </MenuItem> </div>) :(
+              <div><MenuItem onClick={() => {navigate("/login");setAnchorElUser(null)}}>
                   <Typography textAlign="center">Login</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => {navigate("/register");setAnchorElUser(null)}}>
                   <Typography textAlign="center">Register</Typography>
-                </MenuItem></>
-                }
+                </MenuItem></div>
+              )}
             </Menu>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
-    </div>
   );
 };
 export default Navbar;

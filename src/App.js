@@ -1,6 +1,4 @@
 import './App.css';
-import Navbar from './components/Navbar';
-import Login from "../src/pages/Login"
 import AppRouter from './app-router/AppRouter';
 
 function App() {
