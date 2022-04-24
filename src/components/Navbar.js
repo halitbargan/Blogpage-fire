@@ -12,11 +12,16 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import claruswaylogo from "../assets/cw.jpeg"
 import { useNavigate } from 'react-router-dom';
 import {logOut} from "../helpers/firebase"
-const page = ["<Recep/>"];
+import {useContext} from "react"
+import {AuthContext} from "../contexts/AuthContext"
+
+
+
+const page = ["<Halit/>"];
 const Navbar = () => {
+  const {currentUser} = useContext(AuthContext)
   // const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const currentUser=false
   const navigate=useNavigate()
   // const handleOpenNavMenu = (event) => {
   //   setAnchorElNav(event.currentTarget);
@@ -52,6 +57,11 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{color:"white", p: 0}}>
+              {currentUser ? (
+              <h5 className="mb-0 text-capitalize">
+                {currentUser?.displayName}
+              </h5>
+            ): " "}
                <AccountCircleIcon fontSize='large'/>
               </IconButton>
             </Tooltip>

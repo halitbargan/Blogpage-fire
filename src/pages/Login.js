@@ -11,7 +11,7 @@ import BlogIcon from "../assets/blok.png";
 import googleLogo from "../assets/google.png";
 import "./LoginRegister.css"
 import { useState } from 'react';
-import {signIn} from "../helpers/firebase";
+import {signIn,signUpProvider} from "../helpers/firebase";
 import {useNavigate} from "react-router-dom"
 
 
@@ -29,6 +29,9 @@ const theme = createTheme();
     console.log(email,password);
     
   };
+  const handleProviderLogin=()=>{
+    signUpProvider(navigate)
+  }
 
   return (
     <div className= "login-container">
@@ -99,6 +102,7 @@ const theme = createTheme();
               fullWidth
               variant="text"
               sx={{ mt: 0, mb: 2 }}
+              onClick={handleProviderLogin}
             >
               WITH <img className= "google-logo" src={googleLogo} alt="google-logo"/>
             </Button>

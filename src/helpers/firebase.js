@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, signOut, updateProfile, onAuthStateChanged,signInWithPopup,GoogleAuthProvider } from "firebase/auth";
 
 // TODO: Replace the following with your app's Firebase project configuration
 //https://firebase.google.com/docs/auth/web/start
@@ -38,7 +38,7 @@ export const createUser = async (email, password,navigate,displayName)=>{
       displayName:displayName
     })
       
-    navigate("/");
+    navigate("/login");
     console.log(userCredential);
    } catch (err) {
        alert(err.message);
@@ -60,8 +60,8 @@ export const logOut=()=>{
 
 export const userObserver = (setCurrentUser)=>{
   onAuthStateChanged(auth, (currentuser) => {
-    if (user) {
-      setCurrentUser(user)
+    if (currentuser) {
+      setCurrentUser(currentuser)
 
     } else {
       setCurrentUser(false)
@@ -69,3 +69,16 @@ export const userObserver = (setCurrentUser)=>{
   });
 }
 
+
+export const signUpProvider=(navigate)=>{
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    console.log(result);
+    navigate("/")
+  }).catch((error) => {
+    // Handle Errors here.
+    console.log(error)
+   
+  });
+}
