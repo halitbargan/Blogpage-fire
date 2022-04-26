@@ -1,6 +1,7 @@
 import './App.css';
 import AppRouter from './app-router/AppRouter';
-import AuthContextProvider from './contexts/AuthContext';
+import AuthContextProvider from './context/AuthContext';
+
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
     <AuthContextProvider>
     <AppRouter/>
     </AuthContextProvider>
-    
+
     </div>
   );
 }

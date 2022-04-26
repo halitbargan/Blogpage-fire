@@ -13,15 +13,15 @@ import claruswaylogo from "../assets/cw.jpeg"
 import { useNavigate } from 'react-router-dom';
 import {logOut} from "../helpers/firebase"
 import {useContext} from "react"
-import {AuthContext} from "../contexts/AuthContext"
+import {AuthContext} from "../context/AuthContext"
 
 
 
 const page = ["<Halit/>"];
 const Navbar = () => {
   const {currentUser} = useContext(AuthContext)
-  // const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  // const [anchorElNav, setAnchorElNav] = React.useState(false);
+  const [anchorElUser, setAnchorElUser] = React.useState(false);
   const navigate=useNavigate()
   // const handleOpenNavMenu = (event) => {
   //   setAnchorElNav(event.currentTarget);
@@ -30,10 +30,10 @@ const Navbar = () => {
     setAnchorElUser(event.currentTarget);
   };
   // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
+  //   setAnchorElNav(false);
   // };
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorElUser(false);
   };
   return (
     <AppBar position="static">
@@ -44,8 +44,10 @@ const Navbar = () => {
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: 'flex',  } }}
+            // onClick={navigate("/")}
+          
           >
-           <img src={claruswaylogo} alt="clglogo" width="50px" height="50px"/>
+           <img src={claruswaylogo} alt="clglogo" width="50px" height="50px"   />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           </Box>
@@ -82,19 +84,19 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {currentUser ? (<div>
-              <MenuItem onClick={() => {navigate("/profil"); setAnchorElUser(null)}}>
+              <MenuItem onClick={() => {navigate("/profile"); setAnchorElUser(false)}}>
                 <Typography textAlign="center">Profile</Typography>
               </MenuItem>
-              <MenuItem onClick={() => {navigate("/newblog"); setAnchorElUser(null)}}>
+              <MenuItem onClick={() => {navigate("/newblog"); setAnchorElUser(false)}}>
                 <Typography textAlign="center">New</Typography>
               </MenuItem>
-              <MenuItem onClick={() => {navigate("/"); setAnchorElUser(null);logOut()}}>
+              <MenuItem onClick={() => {navigate("/"); setAnchorElUser(false);logOut()}}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem> </div>) :(
-              <div><MenuItem onClick={() => {navigate("/login");setAnchorElUser(null)}}>
+              <div><MenuItem onClick={() => {navigate("/login");setAnchorElUser(false)}}>
                   <Typography textAlign="center">Login</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => {navigate("/register");setAnchorElUser(null)}}>
+                <MenuItem onClick={() => {navigate("/register");setAnchorElUser(false)}}>
                   <Typography textAlign="center">Register</Typography>
                 </MenuItem></div>
               )}

@@ -1,12 +1,23 @@
 import React from "react";
-// import "./Dashboard.css";
+import BlogCard from "../components/BlogCard";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   return (
     <div>
-      <h1 style={{fontFamily: "'Girassol', cursive",
-    color: "#046582",
-    fontSize:60}}>──── DASHBOARD ────</h1>
+      <h1 className="dash-text">──── Dashboard ────</h1>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "1rem",
+          // margin: "3rem",
+          justifyContent: "center",
+        }}
+      >
+        <BlogCard style={{ margin: "auto" }} />
+        <BlogCard style={{ margin: "auto" }} />
+      </div>
     </div>
   );
 };
