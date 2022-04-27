@@ -13,6 +13,8 @@ const firebaseConfig = {
   storageBucket:process.env.REACT_APP_storageBucket ,
   messagingSenderId:process.env.REACT_APP_messagingSenderId ,
   appId:process.env.REACT_APP_appId ,
+  databaseURL:process.env.REACT_APP_databaseURL,
+
 };
 // const firebaseConfig = {
 //     apiKey: "AIzaSyDK3lVerlK3rzfIkimtIql1nVQn1legt_4",

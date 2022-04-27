@@ -9,11 +9,9 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
 
-export default function BlogCard() {
-  const { currentUser } = useContext(AuthContext);
+
+export default function BlogCard({item,index}) {
 
   const [likeNumber, setLikeNumber] = useState(0);
   const [likeColor, setLikeColor] = useState();
@@ -37,8 +35,8 @@ export default function BlogCard() {
       <CardMedia
         component="img"
         height="100"
-        image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
+        image={item.imageURL}
+        alt="photo"
         objectfit="contain"
       />
       <CardContent>
@@ -59,12 +57,10 @@ export default function BlogCard() {
               color: "#046582",
             }}
           >
-            <h3>Title Here</h3>
-            <h6 style={{ color: "grey" }}>Date Here</h6>
+            <h3>{item.title}</h3>
+            <h6 style={{ color: "grey" }}>{item.date}</h6>
           </div>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {item.content}
         </Typography>
 
         <Typography
@@ -75,7 +71,7 @@ export default function BlogCard() {
           <IconButton sx={{ color: "black", p: 0 }}>
             <AccountCircleIcon fontSize="small" />
           </IconButton>
-          {currentUser?.email}
+          {item.author}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
