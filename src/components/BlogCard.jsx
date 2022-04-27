@@ -9,13 +9,14 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-
+import { useNavigate } from "react-router";
 
 export default function BlogCard({item,index}) {
 
   const [likeNumber, setLikeNumber] = useState(0);
   const [likeColor, setLikeColor] = useState();
   const [click, setClick] = useState(true);
+  const navigate = useNavigate();
 
   ///like make red and +1 function
   const handleLike = () => {
@@ -29,9 +30,13 @@ export default function BlogCard({item,index}) {
       setClick(!click);
     }
   };
+  const handleClick = () => {
+    navigate("/details", { state: { item } });
+  };
 
   return (
     <Card sx={{ width: 300, height: 500 }}>
+      <div onClick={handleClick}>
       <CardMedia
         component="img"
         height="100"
@@ -74,6 +79,7 @@ export default function BlogCard({item,index}) {
           {item.author}
         </Typography>
       </CardContent>
+      </div>
       <CardActions disableSpacing>
         <IconButton
           onClick={() => {
