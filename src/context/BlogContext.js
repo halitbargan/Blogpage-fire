@@ -1,16 +1,19 @@
-//database veri gönderme,alma,silme,değişiklik yapma
-//! database add and call functions
-
-import { getDatabase, ref, set, push, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  push,
+  onValue,
+  remove,
+  update,
+} from "firebase/database";
 import { createContext, useState, useEffect, useContext } from "react";
 import { AuthContext } from "./AuthContext";
 
 export const BlogContext = createContext();
 
 const d = new Date();
-const time = d.toLocaleDateString()
-console.log(time);
-
+const time = d.toLocaleDateString();
 
 const BlogContextProvider = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
@@ -51,8 +54,25 @@ const BlogContextProvider = ({ children }) => {
     }, []);
     return { isLoading, blogList };
   };
+  //! Remove Database
+
+  const DeleteBlog = (index) => {
+    const db = getDatabase();
+    const userRef = ref(db, "firebaseDatabase");
+    remove(ref(db, "firebaseDatabase/" + index));
+  };
+
+  //! Edit Database
+  const EditBlog = (item) => {
+    const db = getDatabase();
+    const updates = {};
+
+    updates["firebaseDatabase/" + item.index] = item;
+    return update(ref(db), updates);
+  };
+
   return (
-    <BlogContext.Provider value={{ BlogFetch, AddBlog }}>
+    <BlogContext.Provider value={{ BlogFetch, AddBlog, DeleteBlog, EditBlog }}>
       {children}
     </BlogContext.Provider>
   );
