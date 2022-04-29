@@ -1,3 +1,5 @@
+//! database add and call functions
+
 import {
   getDatabase,
   ref,
@@ -9,7 +11,6 @@ import {
 } from "firebase/database";
 import { createContext, useState, useEffect, useContext } from "react";
 import { AuthContext } from "./AuthContext";
-import Toastify from "../helpers/toastNotify";
 
 export const BlogContext = createContext();
 
@@ -22,7 +23,7 @@ const BlogContextProvider = ({ children }) => {
   //!Add Blog
   const AddBlog = (info) => {
     const database = getDatabase();
-    const blogRef = ref(database, "firebaseDatabase");
+    const blogRef = ref(database, "fireblogDb");
     const newBlogRef = push(blogRef);
     set(newBlogRef, {
       title: info.title,
@@ -31,7 +32,6 @@ const BlogContextProvider = ({ children }) => {
       author: currentUser.email,
       date: time,
     });
-    
   };
   //!Call Blog
   const BlogFetch = () => {
@@ -41,7 +41,7 @@ const BlogContextProvider = ({ children }) => {
     useEffect(() => {
       setIsLoading(true);
       const database = getDatabase();
-      const blogRef = ref(database, "firebaseDatabase");
+      const blogRef = ref(database, "fireblogDb");
 
       onValue(blogRef, (snapshot) => {
         const data = snapshot.val();
@@ -60,20 +60,16 @@ const BlogContextProvider = ({ children }) => {
 
   const DeleteBlog = (id) => {
     const db = getDatabase();
-    const userRef = ref(db, "firebaseDatabase");
-    remove(ref(db, "firebaseDatabase/" + id));
-    Toastify("The Blog deleted")
+    remove(ref(db, "fireblogDb/" + id));
   };
 
   //! Edit Database
   const EditBlog = (info) => {
     const db = getDatabase();
     const updates = {};
-    Toastify("The blog updated")
 
-    updates["firebaseDatabase/" + info.id] = info;
+    updates["fireblogDb/" + info.id] = info;
     return update(ref(db), updates);
-    
   };
 
   return (

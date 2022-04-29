@@ -1,15 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Dashboard from "../pages/Dashboard";
-import Login from "../pages/Login";
-import NewBlog from "../pages/NewBlog";
-import Profile from "../pages/Profile";
-import Register from "../pages/Register";
+import Dashboard from "../Pages/Dashboard";
+import Login from "../Pages/Login";
+import NewBlog from "../Pages/NewBlog";
+import Profile from "../Pages/Profile";
+import Register from "../Pages/Register";
+import Details from "../Pages/Details";
 import PrivateRouter from "./PrivateRouter";
-import Details from "../pages/Details";
-import BlogForm from "../components/BlogForm";
-
-
+import BlogForm from "../Pages/BlogForm";
 const AppRouter = () => {
   return (
     <div>
@@ -19,11 +17,10 @@ const AppRouter = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          
-          <Route element={<PrivateRouter/>}>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/newBlog" element={<NewBlog />} />
-            <Route path="/details" element={<Details/>}/>
+          <Route element={<PrivateRouter />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/newBlog" element={<NewBlog />} />
+            <Route path="/details/" element={<Details />} />
             <Route path="/blogform" element={<BlogForm />} />
           </Route>
         </Routes>

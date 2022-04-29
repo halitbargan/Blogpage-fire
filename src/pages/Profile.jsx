@@ -28,10 +28,10 @@ export default function Profile() {
           component="img"
           height="200"
           image={currentUser?.photoURL}
-          alt="green iguana"
+          alt="Profile Photo"
         />
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Display Name
+          Name
         </Typography>
         <Typography variant="h5" component="div">
           {currentUser?.displayName}

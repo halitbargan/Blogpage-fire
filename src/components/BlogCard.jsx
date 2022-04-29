@@ -11,8 +11,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { useNavigate } from "react-router";
 
-export default function BlogCard({item,index}) {
-
+export default function BlogCard({ item, index }) {
   const [likeNumber, setLikeNumber] = useState(0);
   const [likeColor, setLikeColor] = useState();
   const [click, setClick] = useState(true);
@@ -30,56 +29,58 @@ export default function BlogCard({item,index}) {
       setClick(!click);
     }
   };
+
   const handleClick = () => {
     navigate("/details", { state: { item } });
   };
 
   return (
-    <Card sx={{ width: 300, height: 500 }}>
+    <Card sx={{ width: 300, height: 550 }}>
       <div onClick={handleClick}>
-      <CardMedia
-        component="img"
-        height="100"
-        image={item.imageURL}
-        alt="photo"
-        objectfit="contain"
-      />
-      <CardContent>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{
-            display: "block",
-            backgroundColor: "#EFEEFE",
-            padding: "0.5rem",
-            fontFamily: "Girassol",
-          }}
-        >
-          <div
-            style={{
-              paddingTop: "1rem",
-              textAlign: "center",
-              color: "#046582",
+        <CardMedia
+          component="img"
+          height="200"
+          image={item.imageURL}
+          alt={item.title}
+          objectfit="contain"
+        />
+        <CardContent>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              height: "35%",
+              display: "block",
+              backgroundColor: "#EFEEFE",
+              padding: "0.5rem",
             }}
           >
-            <h3>{item.title}</h3>
-            <h6 style={{ color: "grey" }}>{item.date}</h6>
-          </div>
-          {item.content}
-        </Typography>
+            <div
+              style={{
+                paddingTop: "1rem",
+                textAlign: "center",
+                color: "#046582",
+              }}
+            >
+              <h2>{`${item.title}`.substring(0, 20) + `..`}</h2>
+              <h6 style={{ color: "grey" }}>{item.date}</h6>
+            </div>
+            {`${item.content}`.substring(0, 80) + `...`}
+          </Typography>
 
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ color: "black", textAlign: "start", mt: 2 }}
-        >
-          <IconButton sx={{ color: "black", p: 0 }}>
-            <AccountCircleIcon fontSize="small" />
-          </IconButton>
-          {item.author}
-        </Typography>
-      </CardContent>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ color: "black", textAlign: "start", mt: 2 }}
+          >
+            <IconButton sx={{ color: "black", p: 0 }}>
+              <AccountCircleIcon fontSize="small" />
+            </IconButton>
+            {item.author}
+          </Typography>
+        </CardContent>
       </div>
+
       <CardActions disableSpacing>
         <IconButton
           onClick={() => {

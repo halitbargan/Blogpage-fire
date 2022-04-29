@@ -1,17 +1,19 @@
 import { useLocation, useNavigate } from "react-router";
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
-import UpdateIcon from '@mui/icons-material/Update';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import Button from "@mui/material/Button";
 import { useContext } from "react";
 import { BlogContext } from "../context/BlogContext";
 import { AuthContext } from "../context/AuthContext";
+import { Box, Container, CssBaseline, Stack } from "@mui/material";
 
 const Details = () => {
   const location = useLocation();
@@ -30,73 +32,115 @@ const Details = () => {
   };
 
   return (
-    <Box
-     xs={{ d: "flex" }}
-    
-    sx={{
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: "center",
-    backgroundAttachment: "fixed",
-    height: "100vh",
-    }}
-   >
-     
-       <Card sx={{ width: "65%", m: 5, height: 600,cursor:"pointer",backgroundColor:"bisque" }}>
-         <div>
-         <img
-           height="300"
-           width="25%"
-           src={item?.imageURL}
-           alt="img"
-           style={{marginTop:"15px"}}
-
-         />
-         <Typography sx={{m:0,mt:1,width:"100%"}}>
-               <Typography gutterBottom variant="h5" component="div" sx={{textAlign:"center",color:"darkgreen"}}>
-                 {item?.title.toUpperCase()}
-               </Typography>
-               <Typography variant="body2" sx={{textAlign:"center",m:"15px",fontSize:"1rem"}}>
-                 {item?.content ?? "No Content"}
-               </Typography>
-               <Typography gutterBottom variant="span" component="div" sx={{textAlign:"center",m:"15px"}}>
-                 {item?.date ?? "No date"}
-               </Typography>
-             </Typography>
-         
-           
-           <Typography paragraph sx={{textAlign:"center",mt:1,color:"black",fontSize:"16px"}}>
-             <AccountCircle/>{item?.author ?? "No email"}
-           </Typography>
-           </div>
-           {item.favorites>0 ?<IconButton aria-label="add to favorites" sx={{textAlign:"left",alignItems:"left",color:"red"}}  >
-             <FavoriteIcon/> 
-           </IconButton>:<IconButton aria-label="add to favorites" sx={{textAlign:"left",alignItems:"left"}}>
-             <FavoriteIcon/> 
-           </IconButton>}
-           <span>{item?.favorites ?? "0"}</span>
-           <IconButton aria-label="add to favorites" sx={{textAlign:"left",alignItems:"left"}}>
-             <ChatBubbleOutlineOutlinedIcon />
-           </IconButton>
-           <span>{item?.comments}</span>
-           
-           {currentUser.email===item.author && (<div>
-            <IconButton sx={{color:"black",fontSize:55}}>
-            <DeleteIcon  sx={{color:"black",fontSize:55}} onClick={()=>{handleErase(item.id)}}/>
-             </IconButton>
-             <IconButton sx={{color:"black",fontSize:55}} >
-             <UpdateIcon  sx={{color:"black",fontSize:55}} onClick={handleUpdate}/>
-             </IconButton>
-           </div>)}
-           
-     
-         
-         
-       </Card>
-       </Box>
-  )
-
+    <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="xxl">
+        <Typography
+          sx={{ color: "#046582", fontFamily: "Girassol" }}
+          variant="h2"
+          component="h2"
+          textAlign="center"
+          marginTop="2rem"
+        >
+          ──── DETAILS ────
+        </Typography>
+        <Box sx={{ height: "92%" }}>
+          <Card
+            sx={{
+              width: "80%",
+              height: "40%",
+              display: "block",
+              margin: "auto",
+              marginBottom: 4,
+              // marginTop: 4
+            }}
+          >
+            <CardMedia
+              component="img"
+              alt={item.title}
+              height="60%"
+              image={item.imageURL}
+              objectfit="contain"
+            />
+            <CardContent
+              sx={{
+                display: "block",
+                backgroundColor: "#EFEEFE",
+                padding: "0.5rem",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "Girassol",
+                  color: "#046582",
+                  fontSize: "2rem",
+                }}
+                gutterBottom
+                variant="h5"
+                component="div"
+              >
+                {item.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {item.date}
+              </Typography>
+              <Typography sx={{ textAlign: "start" }}>
+                {item.content}
+              </Typography>
+            </CardContent>
+            <CardContent>
+              <Typography sx={{ color: "black", textAlign: "start" }}>
+                <IconButton sx={{ color: "black" }}>
+                  <AccountCircleIcon fontSize="medium" />
+                </IconButton>
+                {item.author}
+              </Typography>
+            </CardContent>
+            <CardActions sx={{ marginTop: -2 }}>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <span>1</span>
+              <IconButton aria-label="comment">
+                <ChatBubbleOutlineIcon />
+              </IconButton>
+              <span>1</span>
+            </CardActions>
+          </Card>
+          {item.author === currentUser?.email ? (
+            <Stack
+              direction="row"
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+                marginY: 3,
+              }}
+            >
+              <Button
+                size="large"
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  handleUpdate(item.id);
+                }}
+              >
+                Update
+              </Button>
+              <Button
+                size="large"
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  handleErase(item.id);
+                }}
+              >
+                Delete
+              </Button>
+            </Stack>
+          ) : null}
+        </Box>
+      </Container>
+    </React.Fragment>
+  );
 };
-
 export default Details;

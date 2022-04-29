@@ -16,10 +16,10 @@ import claruswayLogo from "../assets/cw.jpeg";
 import { logOut } from "../helpers/firebase";
 import { AuthContext } from "../context/AuthContext";
 
-const pages = ["<Halit/>"];
+const pages = ["<M.Emin/>"];
 
 const Navbar = () => {
-  
+  // const currentUser = false;
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -59,7 +59,7 @@ const Navbar = () => {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}></Box>
-          
+          {/* ortadaki yazi kismi */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -90,7 +90,7 @@ const Navbar = () => {
               : currentUser?.email}
           </span>
 
-          
+          {/* profil iconu kismi */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Profile Settings">
               <AccountCircleIcon
@@ -116,7 +116,7 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              
+              {/* Login register kismi burada  */}
               {currentUser ? (
                 <div>
                   <MenuItem

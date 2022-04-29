@@ -1,46 +1,38 @@
 import * as React from "react";
-
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-
 import BlogIcon from "../assets/blok.png";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useState, useContext } from "react";
+import googleLogo from "../assets/google.png";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { BlogContext } from "../context/BlogContext";
-import Toastify from "../helpers/toastNotify";
+import { signIn, signUpProvider } from "../helpers/firebase";
 import { Typography } from "@mui/material";
 
-const initialValues = { title: "", content: "", imageURL: "" };
-
-export default function NewBlog() {
-  const navigate = useNavigate();
-
-  const [info, setInfo] = useState(initialValues);
-  const { AddBlog } = useContext(BlogContext);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    AddBlog(info);
-    navigate("/");
-    Toastify("New Blog Added Successfully");
-  };
-  const handleChange = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setInfo({ ...info, [name]: value });
-  };
+export default function SimpleContainer() {
   const style = {
+    backgroundImage: `url("https://picsum.photos/1200/900")`,
+    // marginTop: "150px",
     boxSizing: "border-box",
     backgroundPosition: "center",
     backgroundImageRepeat: "no-repeat",
     backgroundSize: "cover",
     height: "100vh",
     padding: "1rem",
-    backgroundImage: `url("https://picsum.photos/1200/900")`,
   };
 
+  const navigate = useNavigate();
+  const handleProviderLogIn = () => {
+    signUpProvider(navigate);
+  };
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signIn(email, password, navigate);
+    console.log(email, password);
+  };
   return (
     <div style={style}>
       <Container
@@ -51,12 +43,13 @@ export default function NewBlog() {
           boxShadow: "rgba(0, 0, 0, 0.75) 10px 10px 5px 0px",
           backgroundColor: "#fff",
           position: "relative",
+          marginTop: "4rem",
         }}
       >
         {/* <CssBaseline /> */}
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 0,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -80,7 +73,7 @@ export default function NewBlog() {
             component="h1"
             variant="h5"
           >
-            ── New Blog ──
+            ── Login ──
           </Typography>
           <Box noValidate sx={{ mt: 1 }}>
             <form id="register" action="" onSubmit={handleSubmit}>
@@ -88,34 +81,23 @@ export default function NewBlog() {
                 margin="normal"
                 required
                 fullWidth
-                id="title"
-                label="Title"
-                name="title"
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
                 autoFocus
-                onChange={handleChange}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="imageURL"
-                label="Image URL"
-                type="url"
-                id="imageURL"
-                onChange={handleChange}
-              />
-
-              <TextField
-                margin="normal"
-                multiline
-                minRows={10}
-                required
-                fullWidth
-                name="content"
-                label="content"
-                type="textarea"
-                id="content"
-                onChange={handleChange}
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <Button
@@ -125,7 +107,21 @@ export default function NewBlog() {
                 sx={{ mt: 3, mb: 2 }}
                 style={{ backgroundColor: "#046582" }}
               >
-                SUBMIT
+                Login
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, color: "black", backgroundColor: "white" }}
+                onClick={handleProviderLogIn}
+              >
+                WITH
+                <img
+                  src={googleLogo}
+                  alt="googleLogo"
+                  style={{ width: "6rem", height: "2rem", marginLeft: "1rem" }}
+                />
               </Button>
             </form>
           </Box>

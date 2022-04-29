@@ -1,44 +1,53 @@
 import * as React from "react";
+import BlogIcon from "../assets/blok.png";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { useLocation, useNavigate } from "react-router";
+import { useState, useContext } from "react";
 
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
-import BlogIcon from "../assets/blok.png";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router";
 import { BlogContext } from "../context/BlogContext";
 import Toastify from "../helpers/toastNotify";
 import { Typography } from "@mui/material";
 
-const initialValues = { title: "", content: "", imageURL: "" };
+const BlogForm = () => {
+  const location = useLocation();
+  const item = location.state.item;
 
-export default function NewBlog() {
-  const navigate = useNavigate();
+  const initialValues = { ...item };
 
   const [info, setInfo] = useState(initialValues);
-  const { AddBlog } = useContext(BlogContext);
 
-  const handleSubmit = (e) => {
+  const { EditBlog } = useContext(BlogContext);
+
+  const navigate = useNavigate();
+
+  const handleUpdate = (e) => {
     e.preventDefault();
-    AddBlog(info);
-    navigate("/");
-    Toastify("New Blog Added Successfully");
+    EditBlog(info);
+    const item = info;
+    navigate("/details", { state: { item } });
+
+    Toastify(`${info.title} updated Successfully`);
   };
+
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setInfo({ ...info, [name]: value });
   };
+
   const style = {
+    backgroundImage: `url("https://picsum.photos/1200/900")`,
+    // marginTop: "150px",
     boxSizing: "border-box",
     backgroundPosition: "center",
     backgroundImageRepeat: "no-repeat",
     backgroundSize: "cover",
     height: "100vh",
     padding: "1rem",
-    backgroundImage: `url("https://picsum.photos/1200/900")`,
   };
 
   return (
@@ -75,15 +84,11 @@ export default function NewBlog() {
             }}
           />
 
-          <Typography
-            sx={{ color: "#046582", fontFamily: "Girassol" }}
-            component="h1"
-            variant="h5"
-          >
-            ── New Blog ──
+          <Typography component="h1" variant="h5">
+            ── UPDATE {info.title} ──
           </Typography>
           <Box noValidate sx={{ mt: 1 }}>
-            <form id="register" action="" onSubmit={handleSubmit}>
+            <form id="register" action="" onSubmit={handleUpdate}>
               <TextField
                 margin="normal"
                 required
@@ -93,6 +98,7 @@ export default function NewBlog() {
                 name="title"
                 autoFocus
                 onChange={handleChange}
+                value={info.title}
               />
               <TextField
                 margin="normal"
@@ -103,6 +109,7 @@ export default function NewBlog() {
                 type="url"
                 id="imageURL"
                 onChange={handleChange}
+                value={info.imageURL}
               />
 
               <TextField
@@ -116,6 +123,7 @@ export default function NewBlog() {
                 type="textarea"
                 id="content"
                 onChange={handleChange}
+                value={info.content}
               />
 
               <Button
@@ -125,7 +133,7 @@ export default function NewBlog() {
                 sx={{ mt: 3, mb: 2 }}
                 style={{ backgroundColor: "#046582" }}
               >
-                SUBMIT
+                UPDATE
               </Button>
             </form>
           </Box>
@@ -133,4 +141,6 @@ export default function NewBlog() {
       </Container>
     </div>
   );
-}
+};
+
+export default BlogForm;
