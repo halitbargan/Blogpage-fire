@@ -60,7 +60,6 @@ const BlogContextProvider = ({ children }) => {
 
   const DeleteBlog = (id) => {
     const db = getDatabase();
-    const userRef = ref(db, "firebaseDatabase");
     remove(ref(db, "firebaseDatabase/" + id));
     Toastify("The Blog deleted")
   };
